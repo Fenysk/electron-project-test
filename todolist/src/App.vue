@@ -1,5 +1,27 @@
 <template>
-  <router-view/>
+  <div class="
+  app
+  flex flex-row items-start
+  ">
+    <nav class="
+    flex h-screen flex-col justify-center text-2xl
+    bg-gray-800 text-gray-100 font-500
+    ">
+      <router-link class="
+      px-24 py-8
+      hover:bg-gray-300 hover:text-black
+      " to="/">Dashboard</router-link>
+      <router-link class="
+      px-24 py-8
+      hover:bg-gray-300 hover:text-black
+      " to="/saled">Ventes</router-link>
+      <router-link class="
+      px-24 py-8
+      hover:bg-gray-300 hover:text-black
+      " to="/stock">Stock</router-link>
+    </nav>
+    <router-view />
+  </div>
 </template>
 
 <style>

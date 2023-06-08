@@ -1,11 +1,31 @@
-import { createRouter, createWebHashHistory } from 'vue-router'
-import HomeView from '../views/HomeView.vue'
+import { createRouter, createWebHistory } from 'vue-router'
+import DashboardView from '@/views/DashboardView.vue'
+import SaledView from '@/views/SaledView.vue'
+import StockView from '@/views/StockView.vue'
 
 const routes = [
   {
     path: '/',
     name: 'home',
-    component: HomeView
+    redirect: '/dashboard'
+  },
+
+  {
+    path: '/dashboard',
+    name: 'dashboard',
+    component: DashboardView
+  },
+
+  {
+    path: '/saled',
+    name: 'saled',
+    component: SaledView
+  },
+
+  {
+    path: '/stock',
+    name: 'stock',
+    component: StockView
   },
 
   // 404 redirect
@@ -16,7 +36,7 @@ const routes = [
 ]
 
 const router = createRouter({
-  history: createWebHashHistory(),
+  history: createWebHistory(),
   routes
 })
 
