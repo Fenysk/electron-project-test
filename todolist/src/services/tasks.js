@@ -11,14 +11,15 @@ export const getTasks = async () => {
     }
   };
   
-  export const postTask = async (task) => {
+  export const postTask = async (content) => {
     try {
+      console.log(content);
       const response = await fetch('http://localhost:3000/tasks', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ task }),
+        body: JSON.stringify({ content }),
       });
       if (response.ok) {
           return response.json();

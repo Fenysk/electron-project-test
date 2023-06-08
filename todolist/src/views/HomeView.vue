@@ -2,7 +2,7 @@
   <div class="home p-4">
     <h2>ToDo List</h2>
 
-    <input autofocus type="text" v-model="newTask" placeholder="Ajouter une tâche" />
+    <input autofocus type="text" v-model="newTask" placeholder="Ajouter une tâche" @keyup.enter="addTask" />
     <button @click="addTask">Ajouter</button>
     <ul>
       <li v-for="(task, index) in tasks" :key="index">
@@ -43,7 +43,7 @@ export default {
     },
 
     async editTask(index) {
-      const editedTask = prompt('Modifier la tâche', this.tasks[index])
+      const editedTask = prompt('Modifier la tâche', this.tasks[index].task)
       if (editedTask) {
         await putTask(index, editedTask)
         await this.getTasks()
