@@ -1,7 +1,7 @@
 <template>
   <div id="stock-view" class="
   p-8 bg-gray-100
-  h-screen
+  h-screen w-full
   ">
     <h2 class="text-center">Jeux-vidéo en stock</h2>
 
@@ -48,6 +48,7 @@
 </template>
 
 <script>
+import { v4 as uuidv4 } from 'uuid'
 import { getGames, postGame } from '@/services/games'
 import GameMiniature from '@/components/GameMiniature'
 
@@ -82,13 +83,14 @@ export default {
       const games = await getGames()
       games.forEach(game => {
         game.buyDate = new Date(game.buyDate).toLocaleDateString('fr-FR', { year: 'numeric', month: 'long', day: 'numeric' })
-        game.potentialBenefits = game.potentialSellPrice - game.buyPrice
       })
       this.games = games
     },
 
     async postGame(game) {
+      game.id = uuidv4()
       game.buyDate = new Date(game.buyDate)
+      game.potentialBenefits = game.potentialSellPrice - game.buyPrice
       console.log(game)
       await postGame(game)
       this.getGames()
@@ -97,6 +99,6 @@ export default {
 
   created() {
     this.getGames()
-  }
+  },
 }
 </script>

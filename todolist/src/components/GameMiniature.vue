@@ -1,14 +1,14 @@
 <template>
-    <a :href="`/games/${game.id}`">
-        <li class="game
+    <a :href="`/stock/${game.id}`">
+        <li class="game group
         flex flex-col justify-around
         border-2 border-gray-400 rounded-xl overflow-hidden bg-gray-800 text-gray-100 w-64
         hover:border-gray-600 hover:bg-gray-700 hover:text-gray-200
         transition-all duration-500
         ">
             <img class="
-        aspect-[3/2] object-cover object-top w-fit-content p-3 rounded-2xl
-        hover:aspect-square hover:object-bottom hover:rounded-bl-2xl hover:rounded-br-2xl
+        aspect-[5/4] object-cover object-top w-fit-content p-3 rounded-2xl
+        group-hover:object-bottom
         transition-all duration-500
         " :src="game.image" alt="Image de la jaquette du jeu">
 
