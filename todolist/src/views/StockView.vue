@@ -140,7 +140,6 @@ export default {
         buyPrice: 20,
         potentialSellPrice: 40,
         potentialBenefits: 20,
-        buyDate: '2021-01-01',
         additonalInfos: ''
       }
     }
@@ -166,8 +165,7 @@ export default {
     },
 
     async postGame(game) {
-      game.id = uuidv4()
-      game.buyDate = new Date(game.buyDate)
+      game.buyDate = new Date().toISOString().slice(0, 10)
       game.potentialBenefits = game.potentialSellPrice - game.buyPrice
       console.log(game)
       await postGame(game)

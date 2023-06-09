@@ -6,3 +6,27 @@ datasource db {
   provider = "mysql"
   url      = env("DATABASE_URL")
 }
+
+model GamesInStock {
+  id                 Int           @id @default(autoincrement())
+  title              String        @db.VarChar(255)
+  image              String        @db.VarChar(255)
+  platform           String        @db.VarChar(255)
+  edition            String        @db.VarChar(255)
+  state              String        @db.VarChar(255)
+  buyPrice           Decimal       @db.Decimal(10, 2)
+  potentialSellPrice Decimal       @db.Decimal(10, 2)
+  potentialBenefits  Decimal       @db.Decimal(10, 2)
+  buyDate            DateTime      @db.Date
+  additionalInfos    String?       @db.Text
+  GameContent        GameContent[]
+}
+
+model GameContent {
+  id      Int          @id @default(autoincrement())
+  gameId  Int
+  content String       @db.VarChar(255)
+  game    GamesInStock @relation(fields: [gameId], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "GameContent_ibfk_1")
+
+  @@index([gameId], map: "gameId")
+}
