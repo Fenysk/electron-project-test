@@ -1,23 +1,29 @@
 <template>
   <div class="
   app
-  flex flex-row items-start
+  flex flex-col
+  relative
+  md:flex-row md:items-start
   ">
+    <h1 class="
+    absolute top-4 left-4 text-4xl text-gray-100
+    ">Games Stock</h1>
     <nav class="
-    flex h-screen flex-col justify-center text-2xl
-    bg-gray-800 text-gray-100 font-500
+    flex justify-center items-center gap-8
+    bg-gray-800 text-2xl text-gray-100 font-500
+    md:h-screen md:flex-col md:items-start
     ">
       <router-link class="
-      px-24 py-8
-      hover:bg-gray-300 hover:text-black
+      hover:bg-gray-300 hover:text-black px-12 py-6
+      md:px-24 md:py-8 md:w-full
       " to="/">Dashboard</router-link>
       <router-link class="
-      px-24 py-8
-      hover:bg-gray-300 hover:text-black
+      hover:bg-gray-300 hover:text-black px-12 py-6
+      md:px-24 md:py-8 md:w-full
       " to="/saled">Ventes</router-link>
       <router-link class="
-      px-24 py-8
-      hover:bg-gray-300 hover:text-black
+      hover:bg-gray-300 hover:text-black px-12 py-6
+      md:px-24 md:py-8 md:w-full
       " to="/stock">Stock</router-link>
     </nav>
     <router-view />
@@ -26,6 +32,13 @@
 
 <style>
 input {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin-right: 10px;
+}
+
+select {
   padding: 10px;
   border: 1px solid #ccc;
   border-radius: 5px;
