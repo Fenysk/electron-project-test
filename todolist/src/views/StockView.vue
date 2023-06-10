@@ -73,7 +73,7 @@
             </div>
             <ul class="flex justify-center gap-1 mt-2">
               <li v-for="content in newGameToStockForm.contents" :key="content"
-                class="px-4 py-2 rounded-md relative cursor-pointer text-sm bg-gray-200 text-black hover:scale-90 transition duration-200"
+                class="px-4 py-2 rounded-md relative cursor-pointer text-sm bg-gray-200 text-black hover:scale-90 hover:bg-red-300 transition duration-200"
                 @click="removeContent(content)">
                 {{ content }}
               </li>
@@ -131,7 +131,7 @@ export default {
       openCreateModal: false,
       games: [],
       newGameToStockForm: {
-        title: 'Super Smash Bros. Ultimate',
+        title: '',
         image: 'https://gameinferno.fr/wp-content/uploads/2013/12/Super_Mario_Bros._NA-438x600.png',
         platform: 'Autre',
         edition: 'Standard',

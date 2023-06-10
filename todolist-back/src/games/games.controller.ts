@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Put, Delete, Param, Body } from '@nestjs/common';
+import { Controller, Get, Post, Put, Delete, Param, Body, ParseIntPipe } from '@nestjs/common';
 
 import { PrismaClient } from '@prisma/client';
 import { OnModuleDestroy } from '@nestjs/common';
@@ -16,10 +16,12 @@ export class GamesController implements OnModuleDestroy {
   }
 
   @Get(':id')
-  async getGame(@Param('id') id: number) {
+  async getGame(@Param('id', ParseIntPipe) id: number) {
+  
     const game = await prisma.gamesInStock.findUnique({
       where: { id },
     });
+
     return game;
   }
 
@@ -43,7 +45,7 @@ export class GamesController implements OnModuleDestroy {
   }
 
   @Put(':id')
-  async putGame(@Param('id') id: number, @Body() updatedGame: any) {
+  async putGame(@Param('id', ParseIntPipe) id: number, @Body() updatedGame: any) {
     const game = await prisma.gamesInStock.update({
       where: { id },
       data: updatedGame,
@@ -52,7 +54,7 @@ export class GamesController implements OnModuleDestroy {
   }
 
   @Delete(':id')
-  async deleteGame(@Param('id') id: number) {
+  async deleteGame(@Param('id', ParseIntPipe) id: number) {
     const deletedGame = await prisma.gamesInStock.delete({
       where: { id },
     });

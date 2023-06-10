@@ -99,6 +99,9 @@ export default {
     },
 
     async created() {
+
+        console.log(this.$route.params.id)
+
         this.game = await getGame(this.$route.params.id)
         this.game.buyDate = new Date(this.game.buyDate).toLocaleDateString('fr-FR', { year: 'numeric', month: 'long', day: 'numeric' })
     }
