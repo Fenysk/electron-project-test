@@ -21,7 +21,7 @@ export class GamesController implements OnModuleDestroy {
     const game = await prisma.gamesInStock.findUnique({
       where: { id },
     });
-
+    
     return game;
   }
 

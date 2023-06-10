@@ -51,8 +51,7 @@
                 object-contain h-auto max-h-[30vh]
                 " />
             </div>
-            <form v-if="editMode" @submit.prevent="editGame(game.id)"
-            class="
+            <form v-if="editMode" @submit.prevent="editGame(game.id)" class="
             flex flex-wrap gap-4
             w-full
             pt-12 mt-12
@@ -98,6 +97,88 @@
                         <option value="Autre">Autre</option>
                     </select>
                 </div>
+
+                <div class="flex items-center mr-full w-2/3 gap-3">
+                    <label class="
+                    text-right
+                    w-1/3
+                    ">Edition</label>
+                    <input type="text" v-model="game.edition" placeholder="Edition du jeu" class="
+                    rounded-md bg-gray-200 text-black px-2 py-1
+                    w-2/3
+                    " />
+                </div>
+
+                <div class="flex items-center mr-full w-2/3 gap-3">
+                    <label class="
+                    text-right
+                    w-1/3
+                    ">Contenu</label>
+                    <div class="w-2/3">
+                        <input
+                            @keyup.enter="game.contents.push(contentToAdd)"
+                            type="text"
+                            v-model="contentToAdd"
+                            placeholder="Notice, boîte..."
+                            class="rounded-md bg-gray-200 text-black px-2 py-1" />
+                        <button
+                            type="button"
+                            @click="game.contents.push(contentToAdd)"
+                            class="bg-green-100 text-green-800 border-none px-2 py-1 rounded-md text-md font-bold transition duration-200 hover:bg-green-300
+                        ">Ajouter</button>
+                    </div>
+                </div>
+
+                <div v-if="game.contents.length > 0"
+                class="flex items-center mr-full w-2/3 gap-3">
+                    <div class="
+                    text-right
+                    w-1/3
+                    "></div>
+                    <p v-for="(content, index) in game.contents"
+                    :key="index"
+                    class="rounded-md bg-gray-200 text-black px-2 py-1 cursor-pointer
+                    hover:bg-red-300 hover:text-red-800 hover:scale-90 transition duration-200
+                    "
+                    @click="game.contents.splice(index, 1)"
+                    >
+                        {{ content }}
+                    </p>
+                </div>
+
+                <div class="flex items-center mr-full w-2/3 gap-3">
+                    <label class="
+                    text-right
+                    w-1/3
+                    ">Prix d'achat</label>
+                    <input type="number" v-model="game.buyPrice" placeholder="Prix d'achat" class="
+                    rounded-md bg-gray-200 text-black px-2 py-1
+                    w-2/3
+                    " />
+                </div>
+
+                <!-- Prix estimé -->
+                <div class="flex items-center mr-full w-2/3 gap-3">
+                    <label class="
+                    text-right
+                    w-1/3
+                    ">Prix estimé</label>
+                    <input type="number" v-model="game.potentialSellPrice" placeholder="Prix estimé" class="
+                    rounded-md bg-gray-200 text-black px-2 py-1
+                    w-2/3
+                    " />
+                </div>
+
+                <div class="flex items-center mr-full w-2/3 gap-3">
+                    <label class="
+                    text-right
+                    w-1/3
+                    ">Informatons supplémentaires</label>
+                    <input type="text" v-model="game.additionalInfos" placeholder="Info supp" class="
+                    rounded-md bg-gray-200 text-black px-2 py-1
+                    w-2/3
+                    " />
+                </div>
             </form>
             <div class="
             controls
@@ -128,7 +209,8 @@ export default {
         return {
             game: {},
             editMode: false,
-            buyDateToDisplay: ''
+            buyDateToDisplay: '',
+            contentToAdd: ''
         }
     },
 
@@ -149,6 +231,11 @@ export default {
 
         async sellGame(id) {
 
+        },
+
+        async getGame() {
+            this.game = await getGame(this.$route.params.id)
+            this.game.contents = ['Notice', 'Boîte']
         }
     },
 
@@ -156,7 +243,7 @@ export default {
 
         console.log(this.$route.params.id)
 
-        this.game = await getGame(this.$route.params.id)
+        await this.getGame()
         this.buyDateToDisplay = new Date(this.game.buyDate).toLocaleDateString('fr-FR', { year: 'numeric', month: 'long', day: 'numeric' })
     }
 }

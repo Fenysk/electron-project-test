@@ -1,5 +1,7 @@
 {
   "name": "todolist",
+  "author": "Fenysk",
+  "description": "A videogame stock project",
   "version": "0.1.0",
   "private": true,
   "scripts": {
