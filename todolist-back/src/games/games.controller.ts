@@ -12,7 +12,13 @@ export class GamesController implements OnModuleDestroy {
   @Get()
   async getGames() {
     const games = await prisma.gamesInStock.findMany();
-    return games;
+    const soldGames = await prisma.gamesSold.findMany();
+
+    const gamesInStock = games.filter((game) => {
+      return !soldGames.find((soldGame) => soldGame.gameId === game.id);
+    });
+
+    return gamesInStock;
   }
 
   @Get(':id')

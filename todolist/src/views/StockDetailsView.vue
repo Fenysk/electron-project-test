@@ -192,8 +192,9 @@
                     class="bg-orange-100 text-gray-800 border-none px-8 py-4 rounded-md text-xl font-bold transition duration-200  w-auto hover:bg-orange-300">Editer</button>
                 <button @click="editGame(game.id)" v-if="editMode"
                     class="bg-orange-100 text-gray-800 border-none px-8 py-4 rounded-md text-xl font-bold transition duration-200  w-auto hover:bg-orange-300">Enregistrer</button>
-                <button @click="sellGame(game.id)"
+                <button @click="sellGame(game)"
                     class="bg-green-100 text-gray-800 border-none px-8 py-4 rounded-md text-xl font-bold transition duration-200 w-auto  hover:bg-green-300">Vendu</button>
+                <input v-model="game.sellPrice" type="number" class="rounded-md bg-gray-200 text-black px-2 py-1 w-16" />
                 <button @click="deleteGame(game.id)"
                     class="bg-transparent text-gray-100 border-2 px-8 py-4 rounded-md text-xl font-bold ml-auto transition duration-200 hover:bg-red-800 hover:text-gray-100 hover:border-red-800">Supprimer</button>
             </div>
@@ -203,6 +204,7 @@
 
 <script>
 import { getGame, deleteGame, putGame } from '@/services/games'
+import { postGameSold } from '@/services/games-sold'
 export default {
     name: 'StockDetailsView',
 
@@ -231,8 +233,9 @@ export default {
             this.editMode = false
         },
 
-        async sellGame(id) {
-
+        async sellGame(game) {
+            await postGameSold(game)
+            // this.$router.push('/stock')
         },
 
         async getGame() {
