@@ -2,8 +2,8 @@
 
 <template>
     <div id="stock-details" class="
-    px-12 py-16 bg-gray-100
-    w-full h-screen
+    px-12 py-16 bg-gray-200
+    w-full min-h-screen
     ">
         <div class="game
         border-2 border-gray-400 rounded-2xl bg-gray-800
@@ -36,7 +36,7 @@
                         <p v-if="game.contents" class="text-xl mt-2">Contient : {{ game.contents.join(', ') }}</p>
                     </div>
                     <div class="bottom flex flex-col">
-                        <p class="text-xl mt-2">Acheté le {{ game.buyDate }}</p>
+                        <p class="text-xl mt-2">Acheté le {{ buyDateToDisplay }}</p>
                         <div class="prices flex flex-wrap gap-4 mt-2 text-xl">
                             <p class=" buy bg-red-300 text-red-800 inline-block rounded-full px-4 py-2">Acheté
                                 {{ game.buyPrice }} €</p>
@@ -51,6 +51,54 @@
                 object-contain h-auto max-h-[30vh]
                 " />
             </div>
+            <form v-if="editMode" @submit.prevent="editGame(game.id)"
+            class="
+            flex flex-wrap gap-4
+            w-full
+            pt-12 mt-12
+            border-t-2 border-gray-400
+            ">
+
+                <div class="flex items-center mr-full w-2/3 gap-3">
+                    <label class="
+                    text-right
+                    w-1/3
+                    ">Titre</label>
+                    <input type="text" v-model="game.title" placeholder="Nom du jeu" class="
+                    rounded-md bg-gray-200 text-black px-2 py-1
+                    w-2/3
+                    " />
+                </div>
+
+                <div class="flex items-center mr-full w-2/3 gap-3">
+                    <label class="
+                    text-right
+                    w-1/3
+                    ">Image</label>
+                    <input type="text" v-model="game.image" placeholder="URL de l'image" class="
+                    rounded-md bg-gray-200 text-black px-2 py-1
+                    w-2/3
+                    " />
+                </div>
+
+                <div class="flex items-center mr-full w-2/3 gap-3">
+                    <label class="
+                    text-right
+                    w-1/3
+                    ">Plateforme</label>
+                    <select v-model="game.platform" class="
+                    rounded-md bg-gray-200 text-black px-2 py-1
+                    w-2/3
+                    ">
+                        <option value="Nintendo Switch">Nintendo Switch</option>
+                        <option value="PlayStation 4">PlayStation 4</option>
+                        <option value="PlayStation 5">PlayStation 5</option>
+                        <option value="Xbox One">Xbox One / Series</option>
+                        <option value="PC">PC</option>
+                        <option value="Autre">Autre</option>
+                    </select>
+                </div>
+            </form>
             <div class="
             controls
             flex flex-wrap gap-4
@@ -58,14 +106,13 @@
             pt-12 mt-12
             border-t-2 border-gray-400
             ">
-                <button
-                    @click="editGame(game.id)"
+                <button @click="enterEditMode()" v-if="!editMode"
                     class="bg-orange-100 text-gray-800 border-none px-8 py-4 rounded-md text-xl font-bold transition duration-200 hover:bg-orange-300">Editer</button>
-                <button
-                    @click="sellGame(game.id)"
+                <button @click="editGame(game.id)" v-if="editMode"
+                    class="bg-orange-100 text-gray-800 border-none px-8 py-4 rounded-md text-xl font-bold transition duration-200 hover:bg-orange-300">Enregistrer</button>
+                <button @click="sellGame(game.id)"
                     class="bg-green-100 text-gray-800 border-none px-8 py-4 rounded-md text-xl font-bold transition duration-200 hover:bg-green-300">Vendu</button>
-                <button
-                    @click="deleteGame(game.id)"
+                <button @click="deleteGame(game.id)"
                     class="bg-transparent text-gray-100 border-2 px-8 py-4 rounded-md text-xl font-bold ml-auto transition duration-200 hover:bg-red-800 hover:text-gray-100 hover:border-red-800">Supprimer</button>
             </div>
         </div>
@@ -79,22 +126,29 @@ export default {
 
     data() {
         return {
-            game: {}
+            game: {},
+            editMode: false,
+            buyDateToDisplay: ''
         }
     },
 
     methods: {
         async deleteGame(id) {
             await deleteGame(id)
-            this.$router.push('/stock')            
+            this.$router.push('/stock')
+        },
+
+        async enterEditMode() {
+            this.editMode = true
         },
 
         async editGame(id) {
-            
+            await putGame(id, this.game)
+            this.editMode = false
         },
 
         async sellGame(id) {
-            
+
         }
     },
 
@@ -103,7 +157,7 @@ export default {
         console.log(this.$route.params.id)
 
         this.game = await getGame(this.$route.params.id)
-        this.game.buyDate = new Date(this.game.buyDate).toLocaleDateString('fr-FR', { year: 'numeric', month: 'long', day: 'numeric' })
+        this.buyDateToDisplay = new Date(this.game.buyDate).toLocaleDateString('fr-FR', { year: 'numeric', month: 'long', day: 'numeric' })
     }
 }
 </script>

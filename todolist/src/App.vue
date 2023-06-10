@@ -11,7 +11,7 @@
     <nav class="
     flex justify-center items-center gap-8
     bg-gray-800 text-2xl text-gray-100 font-500
-    md:h-screen md:flex-col md:items-start
+    md:min-h-screen md:flex-col md:items-start
     ">
       <router-link class="
       hover:bg-gray-300 hover:text-black px-12 py-6

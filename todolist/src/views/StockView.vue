@@ -1,6 +1,6 @@
 <template>
   <div id="stock-view" class="
-  p-8 bg-gray-100
+  p-8 bg-gray-200
   h-screen w-full
   overflow-y-auto
   ">
@@ -14,7 +14,7 @@
       }}</button>
     </header>
 
-    <div class="modal bg-gray-100 flex items-center" v-if="openCreateModal">
+    <div class="modal flex items-center" v-if="openCreateModal">
       <form @submit.prevent="postGame(newGameToStockForm)"
         class="game border-2 border-gray-400 rounded-2xl bg-gray-800 text-white px-12 py-8 w-fit mx-auto overflow-hidden flex flex-col gap-8">
         <h2 class="text-3xl font-bold mb-8">Ajouter un jeu</h2>
