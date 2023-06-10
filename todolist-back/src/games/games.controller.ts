@@ -17,12 +17,20 @@ export class GamesController implements OnModuleDestroy {
 
   @Get(':id')
   async getGame(@Param('id', ParseIntPipe) id: number) {
-  
     const game = await prisma.gamesInStock.findUnique({
       where: { id },
+      include: { GameContents: true },
     });
-    
-    return game;
+
+    const gameWithContents = {
+      ...game,
+      contents: game.GameContents.map((content) => content.content),
+      GameContents: undefined, // Supprimer la propriété GameContents
+    };
+
+    console.log(gameWithContents);
+
+    return gameWithContents;
   }
 
   @Post()
@@ -41,16 +49,42 @@ export class GamesController implements OnModuleDestroy {
         additionalInfos: game.additionalInfos,
       },
     });
-    return createdGame;
+
+    const createdGameContents = game.contents.forEach(async (content) => {
+      await prisma.gameContents.create({
+        data: {
+          gameId: createdGame.id,
+          content: content
+        }
+      });
+    });
+
+    return 'Game created !'
   }
 
   @Put(':id')
   async putGame(@Param('id', ParseIntPipe) id: number, @Body() updatedGame: any) {
-    const game = await prisma.gamesInStock.update({
+    const { contents, ...gameData } = updatedGame;
+
+    gameData.potentialBenefits = gameData.potentialSellPrice - gameData.buyPrice;
+  
+    const editedGame = await prisma.gamesInStock.update({
       where: { id },
-      data: updatedGame,
+      data: gameData,
     });
-    return game;
+  
+    await prisma.gameContents.deleteMany({
+      where: { gameId: id },
+    });
+  
+    const createdGameContents = await prisma.gameContents.createMany({
+      data: contents.map((content) => ({
+        gameId: editedGame.id,
+        content,
+      })),
+    });
+  
+    return 'Game updated !';
   }
 
   @Delete(':id')

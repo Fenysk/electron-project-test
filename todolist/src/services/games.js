@@ -32,7 +32,7 @@ export async function postGame(game) {
       },
       body: JSON.stringify(game),
     });
-    return response.json();
+    return response;
   } catch (error) {
     console.error('Erreur lors de la création du jeu:', error);
     throw error;
@@ -49,7 +49,7 @@ export async function putGame(id, changedGame) {
       },
       body: JSON.stringify(changedGame),
     });
-    return response.json();
+    return response;
   } catch (error) {
     console.error(`Erreur lors de la mise à jour du jeu avec l'ID ${id}:`, error);
     throw error;

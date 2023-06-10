@@ -1,19 +1,18 @@
-// vue template
-
 <template>
     <div id="stock-details" class="
-    px-12 py-16 bg-gray-200
-    w-full min-h-screen
+    bg-gray-200
+    w-full min-h-screen max-h-screen
+    py-4 sm:py-8 md:py-12 lg:py-16
     ">
         <div class="game
         border-2 border-gray-400 rounded-2xl bg-gray-800
         min-h-[300px] min-w-[300px] w-fit
+        max-w-[70%]
         mx-auto
         text-white
         px-12 py-8
-        overflow-hidden
         ">
-            <div class="header flex justify-between gap-8 relative">
+            <div class="header flex justify-between gap-8 relative mb-12">
 
                 <p class="
                 absolute -right-3 -top-3
@@ -48,20 +47,22 @@
                     </div>
                 </div>
                 <img :src="game.image" :alt="game.title" class="
-                object-contain h-auto max-h-[30vh]
+                object-contain h-auto max-h-[30vh] rounded-md
                 " />
             </div>
             <form v-if="editMode" @submit.prevent="editGame(game.id)" class="
             flex flex-wrap gap-4
             w-full
-            pt-12 mt-12
+            py-6
             border-t-2 border-gray-400
+            overflow-auto
+            max-h-64
             ">
 
-                <div class="flex items-center mr-full w-2/3 gap-3">
+                <div class="flex items-center mr-full w-full px-8 gap-3">
                     <label class="
                     text-right
-                    w-1/3
+                    w-1/4
                     ">Titre</label>
                     <input type="text" v-model="game.title" placeholder="Nom du jeu" class="
                     rounded-md bg-gray-200 text-black px-2 py-1
@@ -69,10 +70,10 @@
                     " />
                 </div>
 
-                <div class="flex items-center mr-full w-2/3 gap-3">
+                <div class="flex items-center mr-full w-full px-8 gap-3">
                     <label class="
                     text-right
-                    w-1/3
+                    w-1/4
                     ">Image</label>
                     <input type="text" v-model="game.image" placeholder="URL de l'image" class="
                     rounded-md bg-gray-200 text-black px-2 py-1
@@ -80,10 +81,10 @@
                     " />
                 </div>
 
-                <div class="flex items-center mr-full w-2/3 gap-3">
+                <div class="flex items-center mr-full w-full px-8 gap-3">
                     <label class="
                     text-right
-                    w-1/3
+                    w-1/4
                     ">Plateforme</label>
                     <select v-model="game.platform" class="
                     rounded-md bg-gray-200 text-black px-2 py-1
@@ -98,10 +99,10 @@
                     </select>
                 </div>
 
-                <div class="flex items-center mr-full w-2/3 gap-3">
+                <div class="flex items-center mr-full w-full px-8 gap-3">
                     <label class="
                     text-right
-                    w-1/3
+                    w-1/4
                     ">Edition</label>
                     <input type="text" v-model="game.edition" placeholder="Edition du jeu" class="
                     rounded-md bg-gray-200 text-black px-2 py-1
@@ -109,10 +110,10 @@
                     " />
                 </div>
 
-                <div class="flex items-center mr-full w-2/3 gap-3">
+                <div class="flex items-center mr-full w-full px-8 gap-3">
                     <label class="
                     text-right
-                    w-1/3
+                    w-1/4
                     ">Contenu</label>
                     <div class="w-2/3">
                         <input
@@ -130,10 +131,10 @@
                 </div>
 
                 <div v-if="game.contents.length > 0"
-                class="flex items-center mr-full w-2/3 gap-3">
+                class="flex items-center mr-full w-full px-8 gap-3">
                     <div class="
                     text-right
-                    w-1/3
+                    w-1/4
                     "></div>
                     <p v-for="(content, index) in game.contents"
                     :key="index"
@@ -146,10 +147,10 @@
                     </p>
                 </div>
 
-                <div class="flex items-center mr-full w-2/3 gap-3">
+                <div class="flex items-center mr-full w-full px-8 gap-3">
                     <label class="
                     text-right
-                    w-1/3
+                    w-1/4
                     ">Prix d'achat</label>
                     <input type="number" v-model="game.buyPrice" placeholder="Prix d'achat" class="
                     rounded-md bg-gray-200 text-black px-2 py-1
@@ -158,10 +159,10 @@
                 </div>
 
                 <!-- Prix estimé -->
-                <div class="flex items-center mr-full w-2/3 gap-3">
+                <div class="flex items-center mr-full w-full px-8 gap-3">
                     <label class="
                     text-right
-                    w-1/3
+                    w-1/4
                     ">Prix estimé</label>
                     <input type="number" v-model="game.potentialSellPrice" placeholder="Prix estimé" class="
                     rounded-md bg-gray-200 text-black px-2 py-1
@@ -169,10 +170,10 @@
                     " />
                 </div>
 
-                <div class="flex items-center mr-full w-2/3 gap-3">
+                <div class="flex items-center mr-full w-full px-8 gap-3">
                     <label class="
                     text-right
-                    w-1/3
+                    w-1/4
                     ">Informatons supplémentaires</label>
                     <input type="text" v-model="game.additionalInfos" placeholder="Info supp" class="
                     rounded-md bg-gray-200 text-black px-2 py-1
@@ -184,15 +185,15 @@
             controls
             flex flex-wrap gap-4
             w-full
-            pt-12 mt-12
+            pt-12
             border-t-2 border-gray-400
             ">
                 <button @click="enterEditMode()" v-if="!editMode"
-                    class="bg-orange-100 text-gray-800 border-none px-8 py-4 rounded-md text-xl font-bold transition duration-200 hover:bg-orange-300">Editer</button>
+                    class="bg-orange-100 text-gray-800 border-none px-8 py-4 rounded-md text-xl font-bold transition duration-200  w-auto hover:bg-orange-300">Editer</button>
                 <button @click="editGame(game.id)" v-if="editMode"
-                    class="bg-orange-100 text-gray-800 border-none px-8 py-4 rounded-md text-xl font-bold transition duration-200 hover:bg-orange-300">Enregistrer</button>
+                    class="bg-orange-100 text-gray-800 border-none px-8 py-4 rounded-md text-xl font-bold transition duration-200  w-auto hover:bg-orange-300">Enregistrer</button>
                 <button @click="sellGame(game.id)"
-                    class="bg-green-100 text-gray-800 border-none px-8 py-4 rounded-md text-xl font-bold transition duration-200 hover:bg-green-300">Vendu</button>
+                    class="bg-green-100 text-gray-800 border-none px-8 py-4 rounded-md text-xl font-bold transition duration-200 w-auto  hover:bg-green-300">Vendu</button>
                 <button @click="deleteGame(game.id)"
                     class="bg-transparent text-gray-100 border-2 px-8 py-4 rounded-md text-xl font-bold ml-auto transition duration-200 hover:bg-red-800 hover:text-gray-100 hover:border-red-800">Supprimer</button>
             </div>
@@ -226,6 +227,7 @@ export default {
 
         async editGame(id) {
             await putGame(id, this.game)
+            await this.getGame()
             this.editMode = false
         },
 
@@ -234,10 +236,21 @@ export default {
         },
 
         async getGame() {
-            this.game = await getGame(this.$route.params.id)
-            this.game.contents = ['Notice', 'Boîte']
+            const id = this.$route.params.id
+            this.game = await getGame(id)
         }
     },
+    
+    //update potentialBenefits when buyPrice or potentialSellPrice
+    watch: {
+        'game.buyPrice': function() {
+            this.game.potentialBenefits = this.game.potentialSellPrice - this.game.buyPrice
+        },
+        'game.potentialSellPrice': function() {
+            this.game.potentialBenefits = this.game.potentialSellPrice - this.game.buyPrice
+        }
+    },
+    
 
     async created() {
 
