@@ -1,7 +1,6 @@
-import { Controller, Get, Post, Put, Delete, Param, Body, ParseIntPipe } from '@nestjs/common';
+import { Controller, Get, Post, Body } from '@nestjs/common';
 
 import { PrismaClient } from '@prisma/client';
-import { OnModuleDestroy } from '@nestjs/common';
 
 const prisma = new PrismaClient();
 

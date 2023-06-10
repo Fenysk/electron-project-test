@@ -4,7 +4,7 @@
   h-screen w-full
   overflow-y-auto
   ">
-    <h2 class="text-center">Jeux-vidéo en stock</h2>
+    <h1 class="text-center">Jeux-vidéo en stock</h1>
 
     <header class="px-8 py-4 flex justify-between items-center
     bg-gray-800 text-gray-100 rounded-md

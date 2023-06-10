@@ -95,9 +95,25 @@ export class GamesController implements OnModuleDestroy {
 
   @Delete(':id')
   async deleteGame(@Param('id', ParseIntPipe) id: number) {
+
+    const deletedGameContents = await prisma.gameContents.deleteMany({
+      where: { gameId: id },
+    });
+    
+    console.log('contenu supprimé');
+
+    const deletedGameSold = await prisma.gamesSold.deleteMany({
+      where: { gameId: id },
+    });
+
+    console.log('vente supprimée');
+
     const deletedGame = await prisma.gamesInStock.delete({
       where: { id },
     });
+
+    console.log('jeu supprimé');
+
     return deletedGame;
   }
 

@@ -235,7 +235,7 @@ export default {
 
         async sellGame(game) {
             await postGameSold(game)
-            // this.$router.push('/stock')
+            this.$router.push('/saled')
         },
 
         async getGame() {
@@ -244,7 +244,6 @@ export default {
         }
     },
     
-    //update potentialBenefits when buyPrice or potentialSellPrice
     watch: {
         'game.buyPrice': function() {
             this.game.potentialBenefits = this.game.potentialSellPrice - this.game.buyPrice
