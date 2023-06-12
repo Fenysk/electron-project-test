@@ -116,7 +116,7 @@
 
 <script>
 import { v4 as uuidv4 } from 'uuid'
-import { getGames, postGame } from '@/services/games'
+import { getGamesStock, postGameStock } from '@/services/games-stock'
 import GameMiniature from '@/components/GameMiniature'
 
 export default {
@@ -157,7 +157,7 @@ export default {
     },
 
     async getGames() {
-      const games = await getGames()
+      const games = await getGamesStock()
       games.forEach(game => {
         game.buyDate = new Date(game.buyDate).toLocaleDateString('fr-FR', { year: 'numeric', month: 'long', day: 'numeric' })
       })
@@ -168,7 +168,7 @@ export default {
       game.buyDate = new Date().toISOString().slice(0, 10)
       game.potentialBenefits = game.potentialSellPrice - game.buyPrice
       console.log(game)
-      await postGame(game)
+      await postGameStock(game)
       this.getGames()
       this.openCreateModal = false
     },

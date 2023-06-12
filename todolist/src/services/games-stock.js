@@ -1,7 +1,7 @@
 const URL = 'http://localhost:3000/games';
 
 // GET (tout)
-export async function getGames() {
+export async function getGamesStock() {
   try {
     const response = await fetch(URL);
     return response.json();
@@ -12,7 +12,7 @@ export async function getGames() {
 }
 
 // GET (détails)
-export async function getGame(id) {
+export async function getGameStock(id) {
   try {
     const response = await fetch(`${URL}/${id}`);
     return response.json();
@@ -23,7 +23,7 @@ export async function getGame(id) {
 }
 
 // POST
-export async function postGame(game) {
+export async function postGameStock(game) {
   try {
     const response = await fetch(URL, {
       method: 'POST',
@@ -40,7 +40,7 @@ export async function postGame(game) {
 }
 
 // PUT
-export async function putGame(id, changedGame) {
+export async function putGameStock(id, changedGame) {
   try {
     const response = await fetch(`${URL}/${id}`, {
       method: 'PUT',
@@ -57,7 +57,7 @@ export async function putGame(id, changedGame) {
 }
 
 // DELETE
-export async function deleteGame(id) {
+export async function deleteGameStock(id) {
   try {
     const response = await fetch(`${URL}/${id}`, {
       method: 'DELETE',

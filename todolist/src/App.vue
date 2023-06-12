@@ -1,31 +1,40 @@
 <template>
-  <div class="
-  app
+  <div class="app
   flex flex-col
-  relative
+  h-screen
   md:flex-row md:items-start
   ">
-    <h1 class="
-    absolute top-4 left-4 text-4xl text-gray-100
-    ">Games Stock</h1>
-    <nav class="
-    flex justify-center items-center gap-8
-    bg-gray-800 text-2xl text-gray-100 font-500
-    md:min-h-screen md:flex-col md:items-start
+    <header class="
+    bg-gray-800
+    text-gray-100
+    flex flex-col justify-center items-center
+    md:h-full md:items-end
     ">
-      <router-link class="
-      hover:bg-gray-300 hover:text-black px-12 py-6
-      md:px-24 md:py-8 md:w-full
-      " to="/">Dashboard</router-link>
-      <router-link class="
-      hover:bg-gray-300 hover:text-black px-12 py-6
-      md:px-24 md:py-8 md:w-full
-      " to="/saled">Ventes</router-link>
-      <router-link class="
-      hover:bg-gray-300 hover:text-black px-12 py-6
-      md:px-24 md:py-8 md:w-full
-      " to="/stock">Stock</router-link>
-    </nav>
+      <h1 class="
+      text-4xl text-gray-100
+      px-12 py-4
+      md:py-6
+      whitespace-nowrap
+      ">Games Stock</h1>
+      <nav class="
+      flex justify-center flex-wrap
+      text-2xl font-500
+      md:flex-col md:items-start md:h-full md:max-h-96 md:mt-12 md:min-w-[80%]
+      ">
+        <router-link class="
+        hover:bg-gray-200 hover:text-black px-8 py-4 rounded-t-lg
+        md:px-12 md:py-8 md:rounded-none md:w-full md:rounded-l-lg
+        " to="/">Dashboard</router-link>
+        <router-link class="
+        hover:bg-gray-200 hover:text-black px-8 py-4 rounded-t-lg
+        md:px-12 md:py-8 md:rounded-none md:w-full md:rounded-l-lg
+        " to="/saled">Ventes</router-link>
+        <router-link class="
+        hover:bg-gray-200 hover:text-black px-8 py-4 rounded-t-lg
+        md:px-12 md:py-8 md:rounded-none md:w-full md:rounded-l-lg
+        " to="/stock">Stock</router-link>
+      </nav>
+    </header>
     <router-view />
   </div>
 </template>

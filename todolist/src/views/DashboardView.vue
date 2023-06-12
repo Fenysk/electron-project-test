@@ -45,7 +45,7 @@
 </template>
 
 <script>
-import { getGames } from '@/services/games'
+import { getGamesStock } from '@/services/games-stock'
 import { getGamesSold } from '@/services/games-sold'
 
 export default {
@@ -68,7 +68,7 @@ export default {
 
   methods: {
     async calculateStats() {
-      const gamesInStock = await getGames()
+      const gamesInStock = await getGamesStock()
       const saledGames = await getGamesSold()
 
       this.totalSales = saledGames.length

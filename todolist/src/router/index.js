@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import DashboardView from '@/views/DashboardView.vue'
-import SaledView from '@/views/SaledView.vue'
+import SoldView from '@/views/SoldView.vue'
 import StockView from '@/views/StockView.vue'
 import StockDetailsView from '@/views/StockDetailsView.vue'
 
@@ -20,7 +20,7 @@ const routes = [
   {
     path: '/saled',
     name: 'saled',
-    component: SaledView
+    component: SoldView
   },
 
   {

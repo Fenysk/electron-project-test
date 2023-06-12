@@ -203,7 +203,7 @@
 </template>
 
 <script>
-import { getGame, deleteGame, putGame } from '@/services/games'
+import { getGameStock, deleteGameStock, putGameStock } from '@/services/games-stock'
 import { postGameSold } from '@/services/games-sold'
 export default {
     name: 'StockDetailsView',
@@ -219,7 +219,7 @@ export default {
 
     methods: {
         async deleteGame(id) {
-            await deleteGame(id)
+            await deleteGameStock(id)
             this.$router.push('/stock')
         },
 
@@ -228,7 +228,7 @@ export default {
         },
 
         async editGame(id) {
-            await putGame(id, this.game)
+            await putGameStock(id, this.game)
             await this.getGame()
             this.editMode = false
         },
@@ -240,7 +240,7 @@ export default {
 
         async getGame() {
             const id = this.$route.params.id
-            this.game = await getGame(id)
+            this.game = await getGameStock(id)
         }
     },
     
