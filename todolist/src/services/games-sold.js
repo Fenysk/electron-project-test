@@ -1,4 +1,4 @@
-const URL = 'http://localhost:3000/games-sold';
+const URL = 'https://electron-project-test-production.up.railway.app/games-sold';
 
 // GET (tout)
 export async function getGamesSold() {
