@@ -39,7 +39,6 @@
     <div class="graphs">
 
 
-
     </div>
   </div>
 </template>
@@ -50,6 +49,7 @@ import { getGamesSold } from '@/services/games-sold'
 
 export default {
   name: 'DashboardView',
+
 
   data() {
     return {

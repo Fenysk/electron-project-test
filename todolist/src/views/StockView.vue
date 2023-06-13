@@ -99,6 +99,8 @@
           </div>
         </div>
 
+        <h2 v-if="isLoaded">Chargement en cours...</h2>
+
         <button type="submit"
           class="bg-green-100 text-gray-800 border-none px-8 py-2 rounded-md text-xl font-bold transition duration-200 hover:bg-green-300 mt-8">Ajouter au stock</button>
       </form>
@@ -109,13 +111,13 @@
     flex flex-wrap gap-4
     mt-4
     ">
+      <h2 v-if="isLoaded">Chargement en cours...</h2>
       <GameMiniature :game="game" v-for="game in games" :key="game.id" />
     </ul>
   </div>
 </template>
 
 <script>
-import { v4 as uuidv4 } from 'uuid'
 import { getGamesStock, postGameStock } from '@/services/games-stock'
 import GameMiniature from '@/components/GameMiniature'
 
@@ -128,6 +130,7 @@ export default {
 
   data() {
     return {
+      isLoaded: false,
       openCreateModal: false,
       games: [],
       newGameToStockForm: {
@@ -157,20 +160,24 @@ export default {
     },
 
     async getGames() {
+      this.isLoaded = true
       const games = await getGamesStock()
       games.forEach(game => {
         game.buyDate = new Date(game.buyDate).toLocaleDateString('fr-FR', { year: 'numeric', month: 'long', day: 'numeric' })
       })
       this.games = games
+      this.isLoaded = false
     },
 
     async postGame(game) {
+      this.isLoaded = true
       game.buyDate = new Date().toISOString().slice(0, 10)
       game.potentialBenefits = game.potentialSellPrice - game.buyPrice
       console.log(game)
       await postGameStock(game)
       this.getGames()
       this.openCreateModal = false
+      this.isLoaded = false
     },
   },
 

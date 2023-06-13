@@ -116,33 +116,21 @@
                     w-1/4
                     ">Contenu</label>
                     <div class="w-2/3">
-                        <input
-                            @keyup.enter="game.contents.push(contentToAdd)"
-                            type="text"
-                            v-model="contentToAdd"
-                            placeholder="Notice, boîte..."
-                            class="rounded-md bg-gray-200 text-black px-2 py-1" />
-                        <button
-                            type="button"
-                            @click="game.contents.push(contentToAdd)"
-                            class="bg-green-100 text-green-800 border-none px-2 py-1 rounded-md text-md font-bold transition duration-200 hover:bg-green-300
+                        <input @keyup.enter="game.contents.push(contentToAdd)" type="text" v-model="contentToAdd"
+                            placeholder="Notice, boîte..." class="rounded-md bg-gray-200 text-black px-2 py-1" />
+                        <button type="button" @click="game.contents.push(contentToAdd)" class="bg-green-100 text-green-800 border-none px-2 py-1 rounded-md text-md font-bold transition duration-200 hover:bg-green-300
                         ">Ajouter</button>
                     </div>
                 </div>
 
-                <div v-if="game.contents.length > 0"
-                class="flex items-center mr-full w-full px-8 gap-3">
+                <div v-if="game.contents.length > 0" class="flex items-center mr-full w-full px-8 gap-3">
                     <div class="
                     text-right
                     w-1/4
                     "></div>
-                    <p v-for="(content, index) in game.contents"
-                    :key="index"
-                    class="rounded-md bg-gray-200 text-black px-2 py-1 cursor-pointer
+                    <p v-for="(content, index) in game.contents" :key="index" class="rounded-md bg-gray-200 text-black px-2 py-1 cursor-pointer
                     hover:bg-red-300 hover:text-red-800 hover:scale-90 transition duration-200
-                    "
-                    @click="game.contents.splice(index, 1)"
-                    >
+                    " @click="game.contents.splice(index, 1)">
                         {{ content }}
                     </p>
                 </div>
@@ -193,8 +181,10 @@
                 <button @click="editGame(game.id)" v-if="editMode"
                     class="bg-orange-100 text-gray-800 border-none px-8 py-4 rounded-md text-xl font-bold transition duration-200  w-auto hover:bg-orange-300">Enregistrer</button>
                 <button @click="sellGame(game)"
-                    class="bg-green-100 text-gray-800 border-none px-8 py-4 rounded-md text-xl font-bold transition duration-200 w-auto  hover:bg-green-300">Vendu</button>
-                <input v-model="game.sellPrice" type="number" class="rounded-md bg-gray-200 text-black px-2 py-1 w-16" />
+                    class="flex items-center gap-4 bg-green-100 text-gray-800 border-none px-8 rounded-md text-xl font-bold transition duration-200 w-auto hover:bg-green-300">
+                    <p class="py-4">Vendu</p>
+                    <input v-model="game.sellPrice" type="number" class="rounded-md bg-gray-200 text-black px-2 w-16" />
+                </button>
                 <button @click="deleteGame(game.id)"
                     class="bg-transparent text-gray-100 border-2 px-8 py-4 rounded-md text-xl font-bold ml-auto transition duration-200 hover:bg-red-800 hover:text-gray-100 hover:border-red-800">Supprimer</button>
             </div>
@@ -234,8 +224,17 @@ export default {
         },
 
         async sellGame(game) {
-            await postGameSold(game)
-            this.$router.push('/saled')
+            if (this.game.sellPrice > 0) {
+                const isConfirm = confirm(`Vendre ${game.title} pour ${game.sellPrice} € ?`)
+                if (isConfirm) {
+                    try {
+                        await postGameSold(game)
+                        this.$router.push('/saled')
+                    } catch (error) {
+                        console.log(error)
+                    }
+                }
+            }
         },
 
         async getGame() {
@@ -243,16 +242,16 @@ export default {
             this.game = await getGameStock(id)
         }
     },
-    
+
     watch: {
-        'game.buyPrice': function() {
+        'game.buyPrice': function () {
             this.game.potentialBenefits = this.game.potentialSellPrice - this.game.buyPrice
         },
-        'game.potentialSellPrice': function() {
+        'game.potentialSellPrice': function () {
             this.game.potentialBenefits = this.game.potentialSellPrice - this.game.buyPrice
         }
     },
-    
+
 
     async created() {
 

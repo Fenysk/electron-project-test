@@ -10,13 +10,17 @@
     grid grid-cols-1 xl:grid-cols-2
     gap-4 mt-8
     ">
-      <SoldGameMiniature v-for="game in saledGames" :key="game.id" :game="game" />
+      <SoldGameMiniature v-for="game in saledGames" :key="game.id" :game="game"
+      @delete-game="deleteGame" />
     </ul>
+
+    <h2 class="text-center" v-if="isLoaded">Chargement en cours...</h2>
   </div>
 </template>
 
 <script>
 import { getGamesSold } from '@/services/games-sold'
+import { deleteGameStock } from '@/services/games-stock'
 import SoldGameMiniature from '@/components/SoldGameMiniature'
 
 export default {
@@ -28,18 +32,28 @@ export default {
 
   data() {
     return {
-      saledGames: []
+      saledGames: [],
+      isLoaded: false
     }
   },
 
   methods: {
     async getSaledGames() {
+      this.isLoaded = true
       this.saledGames = await getGamesSold()
       this.saledGames.forEach(game => {
         game.sellDate = new Date(game.sellDate).toLocaleDateString('fr-FR', { year: 'numeric', month: 'long', day: 'numeric' })
         game.benefits = game.sellPrice - game.buyPrice
       })
       console.log(this.saledGames)
+      this.isLoaded = false
+    },
+
+    async deleteGame(id) {
+      this.isLoaded = true
+      await deleteGameStock(id)
+      this.getSaledGames()
+      this.isLoaded = false
     }
   },
 

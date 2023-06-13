@@ -7,8 +7,8 @@
         transition-all duration-500
         ">
             <img class="
-        aspect-[5/4] object-cover object-top w-fit-content p-3 rounded-2xl
-        group-hover:object-bottom
+        aspect-[5/4] object-cover object-top object-left w-fit-content p-3 rounded-2xl
+        group-hover:object-bottom group-hover:object-right
         transition-all duration-500
         " :src="game.image" alt="Image de la jaquette du jeu">
 
@@ -18,8 +18,9 @@
             ">{{ game.title }}</p>
 
             <div class="prices
-        flex justify-center gap-2 my-3
-        ">
+            grid grid-cols-3 justify-items-center
+            gap-2 my-3 mx-auto
+            ">
                 <p class="
             px-3
             bg-red-500
@@ -34,6 +35,9 @@
             bg-green-500
             rounded-r-xl
             ">{{ game.potentialSellPrice }} €</p>
+                <p>💸</p>
+                <p>🤑</p>
+                <p>🤔</p>
             </div>
 
             <p class="
